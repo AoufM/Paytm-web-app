@@ -3,6 +3,7 @@ const app = express();
 
 const UserRouter = express.Router();
 const zod = require("zod");
+const jwt= require('jsonwebtoken')
 const { User, Account } = require("../db");
 const { JWT_SECRET } = require("../config");
 const { middlewareFunc } = require("../middlewares");
@@ -98,7 +99,7 @@ UserRouter.put("/", middlewareFunc, async (req, res) => {
     });
   }
 
-  await User.updateOne(req.userId, req.body);
+  await User.updateOne({_id:req.userId}, req.body);
 
   res.json({
     message: "Updated successfully",
@@ -110,10 +111,16 @@ UserRouter.get("/bulk", async (req, res) => {
   const users = await User.find({
     $or: [
       {
-        firstName: { $regex: filter },
+        firstName: { $regex: filter,
+        $options:'i' },
       },
       {
-        lastName: { $regex: filter },
+        username: { $regex: filter,
+          $options:'i' },
+      },
+      {
+        lastName: { $regex: filter,
+          $options:'i' },
       },
     ],
   });

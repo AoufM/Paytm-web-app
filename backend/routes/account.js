@@ -1,11 +1,12 @@
 const express = require("express");
 const { middlewareFunc } = require("../middlewares");
 const { Account } = require("../db");
+const { default: mongoose } = require("mongoose");
 const AccountRouter = express.Router();
 
 AccountRouter.get("/balance", middlewareFunc, async (req, res) => {
   const acc = await Account.findOne({
-    userId: req.userId,
+    _id: req.userId,
   });
   res.json({
     balance: acc.balance,
@@ -15,7 +16,7 @@ AccountRouter.get("/balance", middlewareFunc, async (req, res) => {
 AccountRouter.post("/transfer", middlewareFunc, async (req, res) => {
   const mongooseSession = await mongoose.startSession();
 
-  session.startTransaction();
+  mongooseSession.startTransaction();
   const { amount, to } = req.body;
   const account = await Account.findOne({ userId: req.userId }).session(
     mongooseSession
