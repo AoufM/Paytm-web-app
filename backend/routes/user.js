@@ -16,7 +16,7 @@ const signupSchema = zod.object({
 });
 
 const signinSchema = zod.object({
-  username: zod.string().email(),
+  username: zod.string(),
   password: zod.string(),
 });
 
@@ -43,16 +43,21 @@ UserRouter.post("/signup", async (req, res) => {
     lastName: req.body.lastName,
 
   });
-  const userId= user._id
+  const userId= user._id;
+
+
+    const token = jwt.sign({
+        userId
+    }, JWT_SECRET);
 
   await Account.create({
     userId: userId,
-    balance: Math.ceil(Math.random()*1000)
+    balance: Math.ceil(Math.random()*10000)
   })
 
   res.json({
     message: "User created successfully",
-    user,
+    token:token,
   });
 });
 
@@ -76,7 +81,7 @@ UserRouter.post("/signin", async (req, res) => {
     );
 
     res.json({
-      token: token,
+      token,
     });
     return;
   }

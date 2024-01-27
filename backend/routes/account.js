@@ -1,14 +1,26 @@
 const express = require("express");
 const { middlewareFunc } = require("../middlewares");
-const { Account } = require("../db");
+const { Account, User } = require("../db");
 const { default: mongoose } = require("mongoose");
 const AccountRouter = express.Router();
 
 AccountRouter.get("/balance", middlewareFunc, async (req, res) => {
   const acc = await Account.findOne({
-    _id: req.userId,
+    userId: req.userId,
   });
+
+  const {username}= await User.findOne({
+    _id:req.userId
+  })
+
+  const users= await User.find();
+  const userArr= users.filter((user) => user._id.toString() !== req.userId.toString()
+  )
+  
+
   res.json({
+    username,
+    userArr,
     balance: acc.balance,
   });
 });
