@@ -25,7 +25,7 @@ const DashboardPage = () => {
   </div>
   <div className="w-full opacity-10 bg-slate-100 h-0.5"></div>
   <div className="font-semibold text-2xl text-center py-6 flex justify-start ">
-    Your Balance ${balance}
+    Your Balance  ${balance}
   </div>
   <Dashboard userList={usersList}/>
 </div>
