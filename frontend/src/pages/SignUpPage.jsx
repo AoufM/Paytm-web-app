@@ -5,9 +5,9 @@ import axios from "axios";
 
 const SignUpPage = () => {
   return (
-    <>
+    
       <Signup />
-    </>
+    
   );
 };
 

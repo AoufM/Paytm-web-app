@@ -1,0 +1,12 @@
+body {
+  background-color: rgb(49, 48, 48);
+  color: white;
+  font-family: sans-serif;
+}
+
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  width: 24%;
+  height: 100%;
+}

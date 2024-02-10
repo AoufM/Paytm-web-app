@@ -4,12 +4,31 @@ import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 
 const DashboardPage = () => {
- const loaderData= useLoaderData();
- console.log(loaderData);
+  const loaderData = useLoaderData();
+  console.log(loaderData);
+  const userName = loaderData.username;
+  const balance = loaderData.balance;
+  const usersList = loaderData.userArr;
   return (
-    <>
-      <Dashboard  />
-    </>
+   
+    <div className="w-11/12 mx-auto">
+  <div className="flex justify-between items-center h-16">
+    <h1 className="text-3xl font-sans font-semibold">Mini Bank</h1>
+  
+    <p className="text-xl font-sans flex items-center">
+      Hello, {userName} 
+      <span className="bg-slate-50 text-xl text-black font-bold rounded-full w-10 h-10 flex justify-center items-center ml-3 hover:cursor-pointer hover:bg-teal-500">
+        {userName.charAt(0)}
+      </span>
+    </p>
+  
+  </div>
+  <div className="w-full opacity-10 bg-slate-100 h-0.5"></div>
+  <div className="font-semibold text-2xl text-center py-6 flex justify-start ">
+    Your Balance ${balance}
+  </div>
+  <Dashboard userList={usersList}/>
+</div>
   );
 };
 
@@ -17,7 +36,6 @@ export default DashboardPage;
 
 export const loader = async () => {
   const token = localStorage.getItem("Token");
-  console.log(token);
   try {
     const { data } = await axios.get(
       "http://localhost:3000/api/v1/accounts/balance",

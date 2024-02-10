@@ -5,6 +5,8 @@ import DashboardPage from './pages/DashboardPage';
 import {action as SignUpAction} from './pages/SignUpPage'
 import {action as SignInAction} from './pages/SignInPage'
 import {loader as DashboardLoader} from './pages/DashboardPage'
+import SendMoney from './pages/SendMoney';
+import './App.css'
 
 const router= createBrowserRouter([
   {
@@ -20,14 +22,18 @@ const router= createBrowserRouter([
     path:'/dashboard',
     element:<DashboardPage/>,
     loader:DashboardLoader,
+  },{
+    path:'/send',
+    element:<SendMoney/>
   }
 ]);
 
 function App() {
 
   return (
-    
+      
       <RouterProvider router={router}/>
+     
 
      
    
