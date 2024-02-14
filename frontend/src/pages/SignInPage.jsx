@@ -19,6 +19,9 @@ export const action = async ({ request }) => {
     username: data.get("username"),
     password: data.get("password"),
   };
+  if(authData.username==='' || authData.password===''){
+    return alert('Please provide proper inputs')
+  }
   try {
     const { data } = await axios.post(
       "http://localhost:3000/api/v1/user/signin",
@@ -28,6 +31,6 @@ export const action = async ({ request }) => {
     localStorage.setItem("Token", data.token);
     return redirect("/dashboard");
   } catch (e) {
-    return e.response.data.message;
+    return alert(e.response.data.message);
   }
 };

@@ -7,6 +7,7 @@ import {action as SignInAction} from './pages/SignInPage'
 import {loader as DashboardLoader} from './pages/DashboardPage'
 import SendMoney from './pages/SendMoney';
 import './App.css'
+import UserInfo from './pages/UserInfo';
 
 const router= createBrowserRouter([
   {
@@ -25,13 +26,16 @@ const router= createBrowserRouter([
   },{
     path:'/send',
     element:<SendMoney/>
+  },{
+    path:'/userinfo',
+    element:<UserInfo/>
   }
 ]);
 
 function App() {
 
   return (
-      
+       
       <RouterProvider router={router}/>
      
 
