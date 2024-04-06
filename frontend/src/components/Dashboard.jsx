@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import _debounce from "lodash/debounce";
 import SendMoney from "./SendMoney";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({ userList }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-
-  const debouncedSearch = _debounce((query) => {
-    if (query.trim() !== "") {
-      fetchSearchResults(query);
-    } else {
-      setSearchResults([]);
-    }
-  }, 500);
+  const [searchResults, setSearchResults] = useState([])
+  const navigate= useNavigate();
 
   const fetchSearchResults = async () => {
     try {
@@ -26,13 +19,14 @@ const Dashboard = ({ userList }) => {
     }
   };
   useEffect(() => {
-    debouncedSearch(searchQuery);
-    return () => debouncedSearch.cancel();
-  }, [searchQuery, debouncedSearch]);
+    fetchSearchResults();
+  }, [searchQuery]);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
+  const sendMoney = () => {};
 
   return (
     <>
@@ -70,7 +64,12 @@ const Dashboard = ({ userList }) => {
                         {user.username}
                       </p>
                     </div>
-                    <button className="bg-white text-sm text-black py-1 px-2 rounded-md shadow-lg font-bold transition-all hover:bg-teal-500 xl:text-base">
+                    <button
+                      className="bg-white text-sm text-black py-1 px-2 rounded-md shadow-lg font-bold transition-all hover:bg-teal-500 xl:text-base"
+                      onClick={()=>{
+                       navigate(`/send?user=${user._id}&name=${user.username}`)
+                      }}
+                    >
                       Send Money 💳
                     </button>
                   </li>
@@ -100,7 +99,9 @@ const Dashboard = ({ userList }) => {
                         {user.username}
                       </p>
                     </div>
-                    <button className="bg-white text-sm text-black py-1 px-2 rounded-md shadow-lg font-bold transition-all hover:bg-teal-500 xl:text-base">
+                    <button className="bg-white text-sm text-black py-1 px-2 rounded-md shadow-lg font-bold transition-all hover:bg-teal-500 xl:text-base" onClick={()=>{
+                       navigate(`/send?user=${user._id}&name=${user.username}`)
+                      }}>
                       Send Money 💳
                     </button>
                   </li>
@@ -111,11 +112,9 @@ const Dashboard = ({ userList }) => {
         )}
       </div>
 
-     {/* <div className="transfer">
+      {/* <div className="transfer">
       <SendMoney/>
      </div> */}
-
-
     </>
   );
 };
